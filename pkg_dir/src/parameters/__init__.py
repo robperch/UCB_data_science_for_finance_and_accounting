@@ -3,16 +3,16 @@
 
 ## Imports
 
-from .titanicsp_params import (
+from .proy_params import (
 
-    titanicsp_base_data_schema,
-    titanicsp_full_data_schema,
+    proy_base_data_schema,
+    proy_full_data_schema,
     local_json_path,
     json_name,
 
 )
 
-from .titanicsp_params_ml import (
+from .proy_params_ml import (
 
     test_split_size,
     random_state_split,

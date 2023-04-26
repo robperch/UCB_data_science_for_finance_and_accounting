@@ -27,7 +27,7 @@
 
 
 ## Data schema to handle data
-titanicsp_base_data_schema = {
+proy_base_data_schema = {
 
     'PassengerId': {
         'relevant': True,
@@ -169,7 +169,7 @@ titanicsp_base_data_schema = {
 
 
 ## Data schema to handle data
-titanicsp_full_data_schema = titanicsp_base_data_schema
+proy_full_data_schema = proy_base_data_schema
 
 
 
