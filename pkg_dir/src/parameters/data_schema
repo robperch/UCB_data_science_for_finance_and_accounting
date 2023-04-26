@@ -1,0 +1,131 @@
+{
+  "PassengerId": {
+    "relevant": true,
+    "clean_col_name": "PassengerId",
+    "data_type": "str",
+    "feature_type": "categorical",
+    "model_relevant": false,
+    "id_feature": true
+  },
+  "HomePlanet": {
+    "relevant": true,
+    "clean_col_name": "HomePlanet",
+    "data_type": "str",
+    "feature_type": "categorical",
+    "model_relevant": true,
+    "imputation_strategy": "most_frequent"
+  },
+  "CryoSleep": {
+    "relevant": true,
+    "clean_col_name": "CryoSleep",
+    "data_type": "bool",
+    "value_map": {
+      "False": false,
+      "True": true
+    },
+    "feature_type": "categorical",
+    "model_relevant": true,
+    "imputation_strategy": "most_frequent"
+  },
+  "Cabin": {
+    "relevant": false,
+    "clean_col_name": "Cabin",
+    "data_type": "str",
+    "feature_type": "categorical",
+    "model_relevant": false,
+    "imputation_strategy": "custom"
+  },
+  "Destination": {
+    "relevant": true,
+    "clean_col_name": "Destination",
+    "data_type": "str",
+    "feature_type": "categorical",
+    "model_relevant": true,
+    "imputation_strategy": "most_frequent"
+  },
+  "Age": {
+    "relevant": true,
+    "clean_col_name": "Age",
+    "data_type": "int",
+    "feature_type": "numerical",
+    "model_relevant": true,
+    "imputation_strategy": "median"
+  },
+  "VIP": {
+    "relevant": true,
+    "clean_col_name": "VIP",
+    "data_type": "bool",
+    "value_map": {
+      "False": false,
+      "True": true
+    },
+    "feature_type": "categorical",
+    "model_relevant": true,
+    "imputation_strategy": "most_frequent"
+  },
+  "RoomService": {
+    "relevant": true,
+    "clean_col_name": "RoomService",
+    "data_type": "float",
+    "feature_type": "numerical",
+    "model_relevant": false,
+    "imputation_strategy": "constant"
+  },
+  "FoodCourt": {
+    "relevant": true,
+    "clean_col_name": "FoodCourt",
+    "data_type": "float",
+    "feature_type": "numerical",
+    "model_relevant": false,
+    "imputation_strategy": "constant"
+  },
+  "ShoppingMall": {
+    "relevant": true,
+    "clean_col_name": "ShoppingMall",
+    "data_type": "float",
+    "feature_type": "numerical",
+    "model_relevant": false,
+    "imputation_strategy": "constant"
+  },
+  "Spa": {
+    "relevant": true,
+    "clean_col_name": "Spa",
+    "data_type": "float",
+    "feature_type": "numerical",
+    "model_relevant": false,
+    "imputation_strategy": "constant"
+  },
+  "VRDeck": {
+    "relevant": true,
+    "clean_col_name": "VRDeck",
+    "data_type": "float",
+    "feature_type": "numerical",
+    "model_relevant": false,
+    "imputation_strategy": "constant"
+  },
+  "Name": {
+    "relevant": false,
+    "clean_col_name": "Name",
+    "data_type": "str",
+    "feature_type": "categorical",
+    "model_relevant": false
+  },
+  "Transported": {
+    "relevant": true,
+    "clean_col_name": "label",
+    "data_type": "boolean",
+    "value_map": {
+      "False": false,
+      "True": true
+    },
+    "predict_label": true
+  },
+  "ExpensesSum": {
+    "relevant": true,
+    "clean_col_name": "ExpensesSum",
+    "data_type": "float",
+    "feature_type": "numerical",
+    "model_relevant": true,
+    "note": "feature added from base features"
+  }
+}
