@@ -39,10 +39,63 @@ creds_file_path = os.path.join(package_dir, "config", "local", "credentials.yaml
 "----------------------------------------------------------------------------------------------------------------------"
 
 
-"-------------- Data files base path --------------"
+"-------------- Dataset files base path --------------"
 
-## Data base file location
-data_dir_path = os.path.join(package_dir, "data")
+## Dataset name
+dataset_name = 'banks_data'
+
+## Dataset dir
+dataset_dir = os.path.join(package_dir, 'data', 'dataset')
+
+## Dataset base file location
+dataset_local_files = os.path.join(dataset_dir, dataset_name)
+
+## Path to training data
+training_dataset = os.path.join(dataset_local_files, 'train.csv')
+
+## Path to test data
+test_dataset = os.path.join(dataset_local_files, 'test.csv')
+
+
+"-------------- Pickles base path --------------"
+
+## Pickles base location
+pickles_dir_path = os.path.join(package_dir, 'data', 'pickles')
+
+
+## Pipeline pickles location
+
+### Base pipeline pickles dir path
+pipeline_pickles_dir = os.path.join(pickles_dir_path, 'pipeline') + '/'
+
+### Extract pickles
+pipeline_pkl_extract_name = 'extract'
+pipeline_pkl_extract_local_dir = os.path.join(pipeline_pickles_dir, pipeline_pkl_extract_name) + '/'
+
+### Transform pickles
+pipeline_pkl_transform_name = 'trans'
+pipeline_pkl_transform_local_dir = os.path.join(pipeline_pickles_dir, pipeline_pkl_transform_name) + '/'
+
+### Feature engineering pickles
+pipeline_pkl_feateng_name = 'feateng'
+pipeline_pkl_feateng_local_dir = os.path.join(pipeline_pickles_dir, pipeline_pkl_feateng_name) + '/'
+
+### Model training pickles
+pipeline_pkl_modtrain_name = 'modtrain'
+pipeline_pkl_modtrain_local_dir = os.path.join(pipeline_pickles_dir, pipeline_pkl_modtrain_name) + '/'
+
+### Model selection pickles
+pipeline_pkl_modevalsel_name = 'modevalsel'
+pipeline_pkl_modevalsel_local_dir = os.path.join(pipeline_pickles_dir, pipeline_pkl_modevalsel_name) + '/'
+
+### Bias and fairness pickles
+pipeline_pkl_bifair_name = 'bifair'
+pipeline_pkl_bifair_local_dir = os.path.join(pipeline_pickles_dir, pipeline_pkl_bifair_name) + '/'
+
+### Prediction pickles
+pipeline_pkl_predict_name = 'predict'
+pipeline_pkl_predict_local_dir = os.path.join(pipeline_pickles_dir, pipeline_pkl_predict_name) + '/'
+
 
 
 
