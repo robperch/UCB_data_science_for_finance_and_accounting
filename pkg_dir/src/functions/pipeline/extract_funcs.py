@@ -23,7 +23,7 @@ from pkg_dir.config import *
 from pkg_dir.src.utils import (
 
     create_directory_if_nonexistent,
-    upload_file_to_s3,
+#    upload_file_to_s3,
 
 )
 
@@ -56,7 +56,7 @@ def download_data_if_none():
 
         ## Downloading dataset with kaggle's api
         kaggle.api.competition_download_files(
-            'spaceship-titanic',
+            'U.S. FDIC Insured Banks and Financial Institutions',
             path=dataset_dir,
         )
 
@@ -90,7 +90,7 @@ def save_extract_local_df_pkl():
     for file in os.listdir(dataset_local_files):
 
         ## Condition to skip unnecessary file
-        if file != 'sample_submission.csv':
+        if ((file != 'sample_submission.csv') and (file != '.DS_Store')):
 
             ## Data prefix used in pickle name
             if 'train' in file:
@@ -99,13 +99,13 @@ def save_extract_local_df_pkl():
                 data_prefix = '_X_'
 
             ## Reading csv file as pandas dataframe
-            dfx = pd.read_csv(os.path.join(dataset_local_files, file))
+            dfx = pd.read_csv(os.path.join(dataset_local_files, file)) 
 
             ## Saving df as pickle and storing it locally
             pickle.dump(
                 dfx,
                 open(
-                    os.path.join(pipeline_pkl_extract_local_dir, pipeline_pkl_extract_name) + data_prefix + file.split(sep='.')[0] + '.pkl',
+                    os.path.join(pipeline_pkl_extract_local_dir) + pipeline_pkl_extract_name + data_prefix + file.split(sep='.')[0] + '.pkl',
                     'wb'
                 )
             )
@@ -158,7 +158,7 @@ def extract_pipeline_func():
     save_extract_local_df_pkl()
 
     ## Saving local extract pickles in AWS S3
-    save_extract_pkl_s3()
+#    save_extract_pkl_s3()
 
 
     return

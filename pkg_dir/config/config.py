@@ -42,7 +42,7 @@ creds_file_path = os.path.join(package_dir, "config", "local", "credentials.yaml
 "-------------- Dataset files base path --------------"
 
 ## Dataset name
-dataset_name = 'banks_data'
+dataset_name = 'banks_data_'
 
 ## Dataset dir
 dataset_dir = os.path.join(package_dir, 'data', 'dataset')

@@ -72,14 +72,14 @@ def save_eval_metrics_results(metrics_table):
         open(pkl_path, 'wb')
     )
 
-    ## Path where the pickle object will be stored on AWS' S3
-    obj_name = os.path.join(
-        pipeline_pkl_modevalsel_aws_key,
-        pipeline_pkl_modevalsel_name,
-    ) + '_metrics.pkl'
-
-    ## Saving object in AWS S3
-    upload_file_to_s3(pkl_path, base_bucket_name, object_name=obj_name)
+#    ## Path where the pickle object will be stored on AWS' S3
+#    obj_name = os.path.join(
+#        pipeline_pkl_modevalsel_aws_key,
+#        pipeline_pkl_modevalsel_name,
+#    ) + '_metrics.pkl'
+#
+#    ## Saving object in AWS S3
+#    upload_file_to_s3(pkl_path, base_bucket_name, object_name=obj_name)
 
 
     return
@@ -108,14 +108,14 @@ def save_modevalsel_results(dataset_dict, metrics_table):
     )
 
     ## Saving in the cloud the dataset objects that were locally saved as pickles
-    save_dataset_objects_in_cloud(
-        dataset_dict,
-        pipeline_pkl_modevalsel_local_dir,
-        cloud_provider,
-        base_bucket_name,
-        pipeline_pkl_modevalsel_aws_key,
-        pipeline_pkl_modevalsel_name
-    )
+#    save_dataset_objects_in_cloud(
+#        dataset_dict,
+#        pipeline_pkl_modevalsel_local_dir,
+#        cloud_provider,
+#        base_bucket_name,
+#        pipeline_pkl_modevalsel_aws_key,
+#        pipeline_pkl_modevalsel_name
+#    )
 
     ## Saving table with the evaluation metrics results
     save_eval_metrics_results(metrics_table)

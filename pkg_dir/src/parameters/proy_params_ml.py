@@ -25,6 +25,7 @@ from sklearn.ensemble import (
 
 )
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
 
 "--- Local application imports ---"
@@ -69,44 +70,56 @@ numerical_ppl = Pipeline(
 predict_models_dict = {
 
     'random_forest': {
-        'alias': 'randf',
+        'alias': 'rf',
         'model': RandomForestClassifier(
-            # n_estimators=100,
             max_features='sqrt',
-            # max_leaf_nodes=100,
-            # oob_score=True,
             n_jobs=-1,
             random_state=1111
         ),
         'param_grid': {
-            'n_estimators': [50, 75, 100, 125, 150],
-            'min_samples_leaf': [1, 2, 3, 4, 5],
+            'n_estimators': [50, 75],
+#            'min_samples_leaf': [2],
+            'max_depth': [100],
             'criterion': ['gini']
         },
         'class_thresh': 0.4,
     },
 
     'decision_tree': {
-        'alias': 'dect',
+        'alias': 'dt',
         'model': DecisionTreeClassifier(
             random_state=2222
         ),
         'param_grid': {
-            # 'max_depth': [10, 15, 20, 25],
-            'min_samples_leaf': [1, 2, 3, 4, 5]
+            'max_depth': [100, 150],
+            'min_samples_leaf': [2, 3]
+#            'min_samples_leaf': [1]
         },
         'class_thresh': 0.35,
     },
 
-    'gradient_boosting': {
-        'alias': 'xgboost',
-        'model': GradientBoostingClassifier(
+#    'gradient_boosting': {
+#        'alias': 'xgb',
+#        'model': GradientBoostingClassifier(
+#            random_state=3333,
+#        ),
+#        'param_grid': {
+#            'max_depth': [100],
+#            'learning_rate': [0.1],
+#            'n_estimators': [100],
+#        },
+#        'class_thresh': 0.4,
+#    },
+
+    'logistic_regression': {
+        'alias': 'lr',
+        'model': LogisticRegression(
             random_state=3333,
+            max_iter=1000,
         ),
         'param_grid': {
-            # 'max_depth': [10, 15, 20, 25],
-            'learning_rate': [0.05, 0.1, 0.15],
-            'n_estimators': [75, 100, 125],
+            'class_weight': [None, 'Balanced'],
+            'penalty': [None, 'l1', 'l2', 'elasticnet'],
         },
         'class_thresh': 0.4,
     },

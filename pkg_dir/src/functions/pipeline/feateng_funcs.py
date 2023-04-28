@@ -42,43 +42,7 @@ def adding_new_features(dfx):
     """
 
 
-    ## Inserting column with total amount of spent money in luxury amenities
-
-    ### Expenses columns
-    exp_cols = [
-        'RoomService',
-        'FoodCourt',
-        'ShoppingMall',
-        'Spa',
-        'VRDeck',
-    ]
-
-    ### Inserting new column
-    dfx.insert(
-        dfx.columns.tolist().index('VRDeck') + 1,
-        'ExpensesSum',
-        dfx.loc[:, exp_cols].sum(axis=1)
-    )
-
-    ### Data schema of the new feature
-    new_feat_data_schema = {
-        'relevant': True,
-        'clean_col_name': 'ExpensesSum',
-        'data_type': 'float',
-        'feature_type': 'numerical',
-        'model_relevant': True,
-        'note': 'feature added from base features',
-    }
-
-    ### Updating and saving data schema with new feature
-    update_save_data_schema(
-        titanicsp_full_data_schema,
-        'ExpensesSum',
-        new_feat_data_schema,
-        local_json_path,
-        json_name
-    )
-
+    ## No additional columns added
 
     return dfx
 
@@ -97,11 +61,11 @@ def dropping_irrelevant_model_features(dfx):
     ## List of features that will be fed to the model
     model_features = [
         feat
-        for feat in titanicsp_full_data_schema
+        for feat in proy_full_data_schema
         if
-        'model_relevant' in titanicsp_full_data_schema[feat]
+        'model_relevant' in proy_full_data_schema[feat]
         and
-        titanicsp_full_data_schema[feat]['model_relevant']
+        proy_full_data_schema[feat]['model_relevant']
         and
         feat in dfx.columns
     ]
@@ -125,7 +89,7 @@ def imput_feature_values(dfx):
 
 
     ## Segmenting features by type to process them through pipeline
-    feat_imputation_dict = features_list_dict(dfx, titanicsp_full_data_schema, 'imputation_strategy')
+    feat_imputation_dict = features_list_dict(dfx, proy_full_data_schema, 'imputation_strategy')
 
     ## Applying standard imputation
     dfx = apply_imputations(dfx, feat_imputation_dict, np.nan, 0)
@@ -146,7 +110,7 @@ def processing_data_through_pipeline(dfx):
 
 
     ## Segmenting features by type to process them through pipeline
-    feat_type_dict = features_list_dict(dfx, titanicsp_full_data_schema, 'feature_type')
+    feat_type_dict = features_list_dict(dfx, proy_full_data_schema, 'feature_type')
 
     ## Building list of tuples to feed the data processing pipeline
     data_ppl_tuples = [
@@ -205,14 +169,14 @@ def save_feateng_results(dataset_dict):
     )
 
     ## Saving in the cloud the dataset objects that were locally saved as pickles
-    save_dataset_objects_in_cloud(
-        dataset_dict,
-        pipeline_pkl_feateng_local_dir,
-        cloud_provider,
-        base_bucket_name,
-        pipeline_pkl_feateng_aws_key,
-        pipeline_pkl_feateng_name,
-    )
+#    save_dataset_objects_in_cloud(
+#        dataset_dict,
+#        pipeline_pkl_feateng_local_dir,
+#        cloud_provider,
+#        base_bucket_name,
+#        pipeline_pkl_feateng_aws_key,
+#        pipeline_pkl_feateng_name,
+#    )
 
 
     return

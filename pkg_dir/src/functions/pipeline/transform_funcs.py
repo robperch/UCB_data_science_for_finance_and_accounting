@@ -43,8 +43,8 @@ def set_id_feature_as_index(dfx):
     ## Id feature
     id_feature = [
         col
-        for col in titanicsp_base_data_schema
-        if 'id_feature' in titanicsp_base_data_schema[col]
+        for col in proy_base_data_schema
+        if 'id_feature' in proy_base_data_schema[col]
     ][0]
 
     ## Set id feature as index
@@ -68,12 +68,12 @@ def split_features_and_labels(Xy_train):
 
     ## Name of the label feature
     label_name = [
-        titanicsp_full_data_schema[feat]['clean_col_name']
-        for feat in titanicsp_full_data_schema
+        proy_full_data_schema[feat]['clean_col_name']
+        for feat in proy_full_data_schema
         if
-        'predict_label' in titanicsp_full_data_schema[feat]
+        'predict_label' in proy_full_data_schema[feat]
         and
-        titanicsp_full_data_schema[feat]['predict_label']
+        proy_full_data_schema[feat]['predict_label']
     ][0]
 
     ## Isolating labels
@@ -163,14 +163,14 @@ def save_transform_results(dataset_dict):
     )
 
     ## Saving in the cloud the dataset objects that were locally saved as pickles
-    save_dataset_objects_in_cloud(
-        dataset_dict,
-        pipeline_pkl_transform_local_dir,
-        cloud_provider,
-        base_bucket_name,
-        pipeline_pkl_transform_aws_key,
-        pipeline_pkl_transform_name
-    )
+#    save_dataset_objects_in_cloud(
+#        dataset_dict,
+#        pipeline_pkl_transform_local_dir,
+#        cloud_provider,
+#        base_bucket_name,
+#        pipeline_pkl_transform_aws_key,
+#        pipeline_pkl_transform_name
+#    )
 
 
     return
@@ -196,9 +196,10 @@ def transform_pipeline_func():
 
     ## Iterating over every extract object and applying the wrangling functions
     for dataset_obj in dataset_objs:
+        #print(dataset_obj)
 
         ## Apply data wrangling functions based on a predefined dataschema
-        dfx = data_wrangling_schema_functions(dataset_dict[dataset_obj], titanicsp_base_data_schema)
+        dfx = data_wrangling_schema_functions(dataset_dict[dataset_obj], proy_base_data_schema)
 
         ## Setting the id feature as the index
         dfx = set_id_feature_as_index(dfx)

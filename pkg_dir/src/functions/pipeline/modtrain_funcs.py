@@ -55,14 +55,14 @@ def save_magic_loop_results(models_magic_loop):
         open(pkl_path, 'wb')
     )
 
-    ### Path where the pickle object will be stored on AWS' S3
-    obj_name = os.path.join(
-        pipeline_pkl_modtrain_aws_key,
-        pipeline_pkl_modtrain_name,
-    ) + '_model_ml.pkl'
-
-    ### Saving object in AWS S3
-    upload_file_to_s3(pkl_path, base_bucket_name, object_name=obj_name)
+#    ### Path where the pickle object will be stored on AWS' S3
+#    obj_name = os.path.join(
+#        pipeline_pkl_modtrain_aws_key,
+#        pipeline_pkl_modtrain_name,
+#    ) + '_model_ml.pkl'
+#
+#    ### Saving object in AWS S3
+#    upload_file_to_s3(pkl_path, base_bucket_name, object_name=obj_name)
 
 
     return
@@ -91,14 +91,14 @@ def save_modtrain_results(dataset_dict, models_magic_loop):
     )
 
     ## Saving in the cloud the dataset objects that were locally saved as pickles
-    save_dataset_objects_in_cloud(
-        dataset_dict,
-        pipeline_pkl_modtrain_local_dir,
-        cloud_provider,
-        base_bucket_name,
-        pipeline_pkl_modtrain_aws_key,
-        pipeline_pkl_modtrain_name
-    )
+#    save_dataset_objects_in_cloud(
+#        dataset_dict,
+#        pipeline_pkl_modtrain_local_dir,
+#        cloud_provider,
+#        base_bucket_name,
+#        pipeline_pkl_modtrain_aws_key,
+#        pipeline_pkl_modtrain_name
+#    )
 
     ## Saving module results
     save_magic_loop_results(models_magic_loop)
