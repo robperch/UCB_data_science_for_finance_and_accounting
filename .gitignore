@@ -25,3 +25,7 @@ __pycache__/
 ## Dump files
 dump
 
+## Data files
+*.xlsx
+*.csv
+

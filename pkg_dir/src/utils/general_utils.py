@@ -85,8 +85,14 @@ def generate_data_dictionary(df_cols, data_dicts_loc, data_dict_filename):
     ## Create the dictionary as a python object
     data_dict = {
         col: {
-            "Relevant": False,
-            "Rename": col,
+            "relevant": True,
+            "clean_col_name": col,
+            "data_type": "str",
+            "value_map": {
+            },
+            "feature_type": "categorical",
+            "model_relevant": True,
+            "imputation_strategy": "most_frequent"
         }
 
         for col in df_cols
@@ -96,6 +102,32 @@ def generate_data_dictionary(df_cols, data_dicts_loc, data_dict_filename):
     with open(data_dicts_loc + data_dict_filename, "w") as outfile:
         json.dump(
             data_dict,
+            outfile,
+            ensure_ascii=False,
+            indent=2,
+        )
+
+
+    return
+
+
+
+## Dumping locally dictionary as json file
+def dump_dir_as_json(dictionary, dump_path, json_name):
+    """
+    Dumping locally dictionary as json file
+
+    :param dictionary: (dict) dictionary that will be dumped as json
+    :param dump_path: (string) path where the json will be stored on local machine
+    :param json_name: (string) name of the json file that will be stored
+    :return None:
+    """
+
+
+    ## Dumping dict as json
+    with open(dump_path + json_name, "w") as outfile:
+        json.dump(
+            dictionary,
             outfile,
             ensure_ascii=False,
             indent=2,
@@ -125,22 +157,21 @@ def read_json(file_path):
 
 
 ## Creating a directory if it doesn't already exists
-def create_directory_if_nonexistent(dir_path, dir_name):
+def create_directory_if_nonexistent(dir_path):
     """
     Creating a directory if it doesn't already exists
 
-    :param dir_path: (string) path to where the new directory will be located
-    :param dir_name: (string) name of the directory that will be created
+    :param dir_path: (string) path to the directory that will be checked
     :return None:
     """
 
 
     ## Concatenating dir path and dir name
-    dir_path_full = os.path.join(dir_path, dir_name)
+    # dir_path = os.path.join(dir_path, dir_name)
 
     ## Creating directory
-    if not os.path.exists(dir_path_full):
-        os.mkdir(dir_path_full)
+    if not os.path.exists(dir_path):
+        os.mkdir(dir_path)
 
 
     return
@@ -287,6 +318,7 @@ def rename_columns_with_data_schema(dfx, data_schema):
 ## Eliminating irrelevant columns based on specified data schema
 def drop_irrelevant_columns_with_data_schema(dfx, data_schema):
     """
+    Eliminating irrelevant columns based on specified data schema
 
     :param dfx (dataframe): df containing irrelevant columns
     :param data_schema (dictionary): data schema containing distinction between relevant and irrelevant columns
@@ -298,11 +330,14 @@ def drop_irrelevant_columns_with_data_schema(dfx, data_schema):
     rc = [
         data_schema[col]["clean_col_name"]
         for col in data_schema
-        if data_schema[col]["relevant"]
+        if
+            data_schema[col]["relevant"]
+            and
+            data_schema[col]["clean_col_name"] in dfx.columns
     ]
 
     ## Dropping selected columns
-    dfx = dfx.loc[:, rc]
+    dfx = dfx.loc[:, rc].copy()
 
 
     return dfx
@@ -326,12 +361,16 @@ def format_data_types_with_data_schema(dfx, data_schema):
     rc = [
         data_schema[col]["clean_col_name"]
         for col in data_schema
-        if data_schema[col]["relevant"]
-           and data_schema[col]["data_type"] == "str"
+        if
+            data_schema[col]["relevant"]
+            and
+            data_schema[col]["data_type"] == "str"
+            and
+            data_schema[col]["clean_col_name"] in dfx.columns
     ]
     for col in rc:
+#        print('Parsing string column: ', col)
         dfx[col] = dfx[col].astype("str")
-        # dfx[col] = dfx[col].apply(lambda x: unidecode.unidecode(x.upper()))
         dfx[col] = dfx[col].str.normalize('NFKD').str.encode('ascii', errors='ignore').str.decode('utf8')
 
 
@@ -339,10 +378,15 @@ def format_data_types_with_data_schema(dfx, data_schema):
     rc = [
         data_schema[col]["clean_col_name"]
         for col in data_schema
-        if data_schema[col]["relevant"]
-           and data_schema[col]["data_type"] == "datetime"
+        if
+            data_schema[col]["relevant"]
+            and
+            data_schema[col]["data_type"] == "datetime"
+            and
+            data_schema[col]["clean_col_name"] in dfx.columns
     ]
     for col in rc:
+#        print('Parsing datetime column: ', col)
         dfx[col] = pd.to_datetime(dfx[col], errors="coerce")
 
 
@@ -354,6 +398,7 @@ def format_data_types_with_data_schema(dfx, data_schema):
            and data_schema[col]["data_type"] == "int"
     ]
     for col in rc:
+#        print('Parsing integer column: ', col)
         dfx[col] = pd.to_numeric(dfx[col], downcast="integer")
 
 
@@ -361,10 +406,15 @@ def format_data_types_with_data_schema(dfx, data_schema):
     rc = [
         data_schema[col]["clean_col_name"]
         for col in data_schema
-        if data_schema[col]["relevant"]
-           and data_schema[col]["data_type"] == "float"
+        if
+            data_schema[col]["relevant"]
+            and
+            data_schema[col]["data_type"] == "float"
+            and
+            data_schema[col]["clean_col_name"] in dfx.columns
     ]
     for col in rc:
+#        print('Parsing floats column: ', col)
         dfx[col] = pd.to_numeric(dfx[col], downcast="float")
         dfx[col] = dfx[col].round(2)
 
@@ -387,7 +437,12 @@ def map_row_values_with_data_schema(dfx, data_schema):
     mapping_reference = {
         data_schema[col]["clean_col_name"]: data_schema[col]["values_map"]
         for col in data_schema
-        if "values_map" in data_schema[col]
+        if
+            "values_map" in data_schema[col]
+            and
+            data_schema[col]['relevant']
+            and
+            data_schema[col]["clean_col_name"] in dfx.columns
     }
 
     ## Mapping values according to reference

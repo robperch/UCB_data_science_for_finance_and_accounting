@@ -3,6 +3,8 @@
 
 ## Imports
 
+from .pipeline import *
+
 
 
 
